@@ -27,5 +27,5 @@
 ```
 运行示例如图：
 
-<image src= ./assets/PID.png>
+<image src= ../assets/PID.png>
 
