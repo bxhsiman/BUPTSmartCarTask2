@@ -1,0 +1,94 @@
+#include"niming.h" 
+uint8_t data_to_send[100];
+void Niming_Init(void){
+RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_USART1,ENABLE);
+GPIO_InitTypeDef GPIO_Initstructure;
+NVIC_InitTypeDef Nvic_Structure;
+USART_InitTypeDef Usart_Structure;
+
+GPIO_Initstructure.GPIO_Mode=GPIO_Mode_AF_PP;
+GPIO_Initstructure.GPIO_Pin=GPIO_Pin_9;
+GPIO_Initstructure.GPIO_Speed=GPIO_Speed_50MHz;
+GPIO_Init(GPIOA,&GPIO_Initstructure);
+GPIO_Initstructure.GPIO_Mode=GPIO_Mode_IN_FLOATING;
+GPIO_Initstructure.GPIO_Pin=GPIO_Pin_10;
+GPIO_Init(GPIOA,&GPIO_Initstructure);
+	
+NVIC_PriorityGroupConfig(2);
+Nvic_Structure.NVIC_IRQChannel=USART1_IRQn;
+Nvic_Structure.NVIC_IRQChannelCmd=ENABLE;
+Nvic_Structure.NVIC_IRQChannelPreemptionPriority=2;
+Nvic_Structure.NVIC_IRQChannelSubPriority=2;
+NVIC_Init(&Nvic_Structure);
+
+Usart_Structure.USART_BaudRate=115200;
+Usart_Structure.USART_HardwareFlowControl=USART_HardwareFlowControl_None;
+Usart_Structure.USART_Mode=USART_Mode_Rx|USART_Mode_Tx;
+Usart_Structure.USART_Parity=USART_Parity_No;
+Usart_Structure.USART_StopBits=USART_StopBits_1;
+Usart_Structure.USART_WordLength=USART_WordLength_8b;
+USART_Init(USART1,&Usart_Structure);
+USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
+USART_Cmd(USART1,ENABLE);
+}
+void SendByte(uint8_t data){
+USART_SendData(USART1,data);
+while(USART_GetITStatus(USART1,USART_FLAG_TXE)==RESET);
+
+}
+void SendArray(uint8_t a[],uint8_t length){
+for(int i=0;i<length;i++){
+SendByte(a[i]);
+}
+}
+void ANO_DT_Send_F2(int16_t _a, int16_t _b, int16_t _c, int16_t _d)   
+{   
+    uint8_t _cnt = 0;
+    uint8_t sumcheck = 0; 
+    uint8_t addcheck = 0; 
+    uint8_t i=0;
+   data_to_send[_cnt++] = 0xAA;
+    data_to_send[_cnt++] = 0xFF;
+    data_to_send[_cnt++] = 0xF2;
+    data_to_send[_cnt++] = 8; 
+	
+    data_to_send[_cnt++] = BYTE0(_a);
+    data_to_send[_cnt++] = BYTE1(_a);
+	
+    data_to_send[_cnt++] = BYTE0(_b);
+    data_to_send[_cnt++] = BYTE1(_b);
+	
+    data_to_send[_cnt++] = BYTE0(_c);
+    data_to_send[_cnt++] = BYTE1(_c);
+	
+    data_to_send[_cnt++] = BYTE0(_d);
+    data_to_send[_cnt++] = BYTE1(_d);
+	
+	  for ( i = 0; i < data_to_send[3]+4; i++)
+    {
+        sumcheck += data_to_send[i];
+        addcheck += sumcheck;
+    }
+
+    data_to_send[_cnt++] = sumcheck;
+    data_to_send[_cnt++] = addcheck;
+	
+SendArray(data_to_send ,_cnt);
+}
+#ifndef NiMing_H
+#define NiMing_H
+#include "stm32f10x.h"                  // Device header
+#define BYTE0(dwTemp)  (*(char *)(&dwTemp))
+#define BYTE1(dwTemp)  (*((char *)(&dwTemp) + 1))
+#define BYTE2(dwTemp)  (*((char *)(&dwTemp) + 2))
+#define BYTE3(dwTemp)  (*((char *)(&dwTemp) + 3))
+void Niming_Init(void);
+void SendArray(uint8_t a[],uint8_t length);
+void ANO_DT_Send_F2(int16_t _a, int16_t _b, int16_t _c, int16_t _d);   
+#endif
+
+
+
+
+
+
