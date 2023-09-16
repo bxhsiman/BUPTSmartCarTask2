@@ -1,0 +1,27 @@
+//创建执行任务：tasks.json,这个文件就是用来执行编译任务的
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: gcc.exe 生成活动文件",
+			"command": "C:\\mingw64\\bin\\gcc.exe",//指定的编译器
+			"args": [
+				"-fdiagnostics-color=always",
+				"-g",
+				"${workspaceFolder}\\*.c",//指定要编译的文件
+				"-o",
+				"${workspaceFolder}\\${workspaceRootFolderName}.exe"
+				//指定生成可执行程序的路径\\指定可执行程序的文件名
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "编译器: C:\\mingw64\\bin\\gcc.exe"
+		}
+	]
+}
