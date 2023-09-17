@@ -1,24 +1,9 @@
 #include<stdio.h>
+#include "PID.h"
 #define m 0.5 //模拟车的质量0.5kg
 #define ku 0.1//假设小车受到的空气阻力与速度成正比,比例系数0.1，即阻力（牛顿）=0.1*v
 #define fu 1 //假设小车所受地面摩擦力为1N
-typedef struct {
-    double kp;
-    double kd;
-    double ki;
-}PID;
 
-typedef struct {
-    double error;//当前误差
-    double errorsum;//累计误差
-    double lastError;//上次误差
-    double preError;//上上次误差
-    double reli; //每次运算反馈的值
-}ERROR;
-
-extern PID PID_SetParameter(PID s,double p, double i, double d);
-extern ERROR PID_PostionalPID(PID s,ERROR e, double measure, double point);
-extern ERROR PID_IncrementalPID(PID s,ERROR e, double measure, double point);
 int main()
 {
 
