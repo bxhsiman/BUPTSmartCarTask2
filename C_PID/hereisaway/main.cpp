@@ -4,34 +4,34 @@
 #include "PID.h"
 int main(){
 	db now_pos=0,target_pos,kp,ki,kd,output_sum=0;
-	//Ê±¼ä×÷ÎªÖÖ×Ó 
+	//æ—¶é—´ä½œä¸ºç§å­ 
 	srand((unsigned int)time(NULL));
-	printf("ÇëÊäÈëÄ¿±ê£º");
+	printf("è¯·è¾“å…¥ç›®æ ‡ï¼š");
 	scanf("%lf",&target_pos);
-	printf("ÇëÊäÈë²ÎÊı\n");
+	printf("è¯·è¾“å…¥å‚æ•°\n");
 	printf("kp:");
 	scanf("%lf",&kp);
 	printf("ki:");
 	scanf("%lf",&ki);
 	printf("kd:");
 	scanf("%lf",&kd);
-	printf("ÆÕÍ¨Î»ÖÃÊ½pid:\tÆÕÍ¨ÔöÁ¿Ê½pid£º\n");
-	//ÓÃÁ½¸ö±äÁ¿·Ö±ğ½øĞĞÎ»ÖÃÊ½ºÍÔöÁ¿Ê½£¬·µ»ØÖ¸ÕëÓÃÖ¸Õë´æ 
+	printf("æ™®é€šä½ç½®å¼pid:\tæ™®é€šå¢é‡å¼pidï¼š\n");
+	//ç”¨ä¸¤ä¸ªå˜é‡åˆ†åˆ«è¿›è¡Œä½ç½®å¼å’Œå¢é‡å¼ï¼Œè¿”å›æŒ‡é’ˆç”¨æŒ‡é’ˆå­˜ 
 	PID* pid1=PID_Init(kp,ki,kd,target_pos);
 	PID* pid2=PID_Init(kp,ki,kd,target_pos);
-	//Ä£Äâ100ÂÖ 
+	//æ¨¡æ‹Ÿ100è½® 
 	for(int i=1;i<=100;i++){
-		//Î»ÖÃÊ½ 
+		//ä½ç½®å¼ 
 		now_pos+=PID_PositionalPID(pid1,now_pos)+rand()%10-5;
 		printf("E:%lf\t",now_pos-target_pos);
-		//ÔöÁ¿Ê½ 
-		//ÏÈ¼ÆËãÔöÁ¿£¬¼Ó½øÈ¥ 
+		//å¢é‡å¼ 
+		//å…ˆè®¡ç®—å¢é‡ï¼ŒåŠ è¿›å» 
 		output_sum+=PID_IncrementalPID(pid2,now_pos);
-		//ÔÙ²Ù×÷ 
+		//å†æ“ä½œ 
 		now_pos+=output_sum+rand()%10-5;
 		printf("E:%lf\n",now_pos-target_pos);
 	}
-	//ÊÍ·Å¿Õ¼ä 
+	//é‡Šæ”¾ç©ºé—´ 
 	free(pid1);
 	free(pid2);
 } 

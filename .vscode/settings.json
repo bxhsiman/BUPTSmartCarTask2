@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "atomic": "cpp",
+        "*.tcc": "cpp",
+        "cwchar": "cpp",
+        "string": "cpp",
+        "memory": "cpp",
+        "string_view": "cpp",
+        "type_traits": "cpp",
+        "cmath": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "new": "cpp",
+        "ostream": "cpp",
+        "stdexcept": "cpp",
+        "system_error": "cpp",
+        "utility": "cpp"
+    }
+}
