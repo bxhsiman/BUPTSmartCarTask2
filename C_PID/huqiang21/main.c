@@ -37,8 +37,6 @@ int main()
         actual1=PID_PostionalPID(target,actual1,&pid1);
         actual2=PID_IncrementalPID(target,actual2,&pid2);
         pos_err=pid1.err;
-        /*上面这条语句以及输出改为actual1时输出都趋于0
-        按理来说actual1不应该趋于target吗*/
         inc_err=pid2.err;
         printf("E:%-20.2fE:%-.2f\n",pos_err,inc_err);
     }

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _PID.C_H
+#define _PID>C_H
+#endif
 
 typedef struct
 {
