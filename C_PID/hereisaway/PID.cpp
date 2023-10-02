@@ -1,15 +1,15 @@
 #include "PID.h"
 #include <stdlib.h>
-//Î»ÖÃÊ½ 
+//ä½ç½®å¼ 
 db PID_PositionalPID(PID* pid,db now_pos){
-	//ÉèÖÃ»ý·Ö·¶Î§ 
+	//è®¾ç½®ç§¯åˆ†èŒƒå›´ 
 	const db integral_max=20000;
 	const db integral_min=-20000;
-	//¼ÆËãÎó²î 
+	//è®¡ç®—è¯¯å·® 
 	pid->err=pid->target_pos-now_pos;
-	//¼ÆËã»ý·Ö£¨ÀÛ¼Ó£© 
+	//è®¡ç®—ç§¯åˆ†ï¼ˆç´¯åŠ ï¼‰ 
 	pid->integral+=pid->err;
-	//Èç¹û³¬³ö±ß½ç¾ÍÉèÖÃÎª±ß½ç 
+	//å¦‚æžœè¶…å‡ºè¾¹ç•Œå°±è®¾ç½®ä¸ºè¾¹ç•Œ 
 	if(pid->integral>integral_max)
 		pid->integral=integral_max;
 	else if(pid->integral<integral_min)
@@ -17,35 +17,35 @@ db PID_PositionalPID(PID* pid,db now_pos){
 	db output=pid->kp*pid->err+
 			  pid->ki*pid->integral+
 			  pid->kd*(pid->err-pid->last_err1);
-	//¸üÐÂÉÏÒ»¸öÎó²î 
+	//æ›´æ–°ä¸Šä¸€ä¸ªè¯¯å·® 
 	pid->last_err1=pid->err;
 	return output;
 }
-//³õÊ¼»¯£¬¿ÉÒÔÉè¶¨Èý¸ök£¬ÒÔ¼°Ä¿±êÖµ 
+//åˆå§‹åŒ–ï¼Œå¯ä»¥è®¾å®šä¸‰ä¸ªkï¼Œä»¥åŠç›®æ ‡å€¼ 
 PID* PID_Init(db kp,db ki,db kd,db target_pos){
-	//ÒªÓÃ¼ýÍ·²Ù×Ý³ÉÔ±µÄ»°¾ÍÒªÉêÇëÄÚ´æ 
+	//è¦ç”¨ç®­å¤´æ“çºµæˆå‘˜çš„è¯å°±è¦ç”³è¯·å†…å­˜ 
 	PID* pid=(PID*)malloc(sizeof(PID));
 	pid->kp=kp;
 	pid->ki=ki;
 	pid->kd=kd;
 	pid->target_pos=target_pos;
-	//·µ»ØÖ¸Õë 
+	//è¿”å›žæŒ‡é’ˆ 
 	return pid;
 }
-//ÐÞ¸Ä²ÎÊý 
+//ä¿®æ”¹å‚æ•° 
 void PID_SetParameter(PID* pid,db kp,db ki,db kd){
 	pid->kp=kp;
 	pid->ki=ki;
 	pid->kd=kd;
 }
-//ÔöÁ¿Ê½ 
+//å¢žé‡å¼ 
 db PID_IncrementalPID(PID* pid,db now_pos){
 	pid->err=pid->target_pos-now_pos;
-	//Ïàµ±ÓÚ°ÑÎ»ÖÃÊ½µÄ±í´ïÊ½¶¼×öÁË¸ö²î 
+	//ç›¸å½“äºŽæŠŠä½ç½®å¼çš„è¡¨è¾¾å¼éƒ½åšäº†ä¸ªå·® 
 	db output=pid->kp*(pid->err-pid->last_err1)+
 			  pid->ki*pid->err+
 			  pid->kd*(pid->err-2*pid->last_err1+pid->last_err2);
-	//ÐèÒªÎ¬»¤Ç°Á½¸öÎó²î 
+	//éœ€è¦ç»´æŠ¤å‰ä¸¤ä¸ªè¯¯å·® 
 	pid->last_err1=pid->err;
 	pid->last_err2=pid->last_err1;
 	return output;

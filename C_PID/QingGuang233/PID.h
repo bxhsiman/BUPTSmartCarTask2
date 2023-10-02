@@ -5,7 +5,7 @@ typedef struct {
 	float kp;
 	float ki;
 	float kd;
-    float kf; //Ç°À¡²ÎÊı
+    float kf; //å‰é¦ˆå‚æ•°
 	float target;
     float last_target;
 	float pos;
@@ -13,11 +13,11 @@ typedef struct {
     float integral;
 }PID;
 
-int PID_Init(PID *pid);            //³õÊ¼»¯PID½á¹¹Ìå
-int PID_SetParameter(float kp, float ki, float kd,float kf, PID* pid);     //ÉèÖÃPID²ÎÊı
-int PID_SetTarget(float target,PID* pid);    //ÉèÖÃÏÂÒ»¸öÄ¿±êÎ»ÖÃ
-float PID_PostionalPID(PID* pid);    //Î»ÖÃÊ½PIDÊµÏÖ
-float PID_IncrementalPID(PID* pid);    //ÔöÁ¿Ê½PIDÊµÏÖ
-float PID_FeedforwardIncrementalPID(PID* pid);  //Ç°À¡Ê½ÔöÁ¿PIDÊµÏÖ
+int PID_Init(PID *pid);            //åˆå§‹åŒ–PIDç»“æ„ä½“
+int PID_SetParameter(float kp, float ki, float kd,float kf, PID* pid);     //è®¾ç½®PIDå‚æ•°
+int PID_SetTarget(float target,PID* pid);    //è®¾ç½®ä¸‹ä¸€ä¸ªç›®æ ‡ä½ç½®
+float PID_PostionalPID(PID* pid);    //ä½ç½®å¼PIDå®ç°
+float PID_IncrementalPID(PID* pid);    //å¢é‡å¼PIDå®ç°
+float PID_FeedforwardIncrementalPID(PID* pid);  //å‰é¦ˆå¼å¢é‡PIDå®ç°
 
 #endif
