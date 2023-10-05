@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+"lights3\startup_stm32f101xe.o"
+"lights3\main.o"
+"lights3\gpio.o"
+"lights3\tim.o"
+"lights3\stm32f1xx_it.o"
+"lights3\stm32f1xx_hal_msp.o"
+"lights3\stm32f1xx_hal_gpio_ex.o"
+"lights3\stm32f1xx_hal_tim.o"
+"lights3\stm32f1xx_hal_tim_ex.o"
+"lights3\stm32f1xx_hal.o"
+"lights3\stm32f1xx_hal_rcc.o"
+"lights3\stm32f1xx_hal_rcc_ex.o"
+"lights3\stm32f1xx_hal_gpio.o"
+"lights3\stm32f1xx_hal_dma.o"
+"lights3\stm32f1xx_hal_cortex.o"
+"lights3\stm32f1xx_hal_pwr.o"
+"lights3\stm32f1xx_hal_flash.o"
+"lights3\stm32f1xx_hal_flash_ex.o"
+"lights3\stm32f1xx_hal_exti.o"
+"lights3\system_stm32f1xx.o"
+--strict --scatter "lights3\lights3.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "lights3.map" -o lights3\lights3.axf

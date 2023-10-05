@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+"pwmtest\startup_stm32f103xe.o"
+"pwmtest\main.o"
+"pwmtest\gpio.o"
+"pwmtest\tim.o"
+"pwmtest\stm32f1xx_it.o"
+"pwmtest\stm32f1xx_hal_msp.o"
+"pwmtest\stm32f1xx_hal_gpio_ex.o"
+"pwmtest\stm32f1xx_hal_tim.o"
+"pwmtest\stm32f1xx_hal_tim_ex.o"
+"pwmtest\stm32f1xx_hal.o"
+"pwmtest\stm32f1xx_hal_rcc.o"
+"pwmtest\stm32f1xx_hal_rcc_ex.o"
+"pwmtest\stm32f1xx_hal_gpio.o"
+"pwmtest\stm32f1xx_hal_dma.o"
+"pwmtest\stm32f1xx_hal_cortex.o"
+"pwmtest\stm32f1xx_hal_pwr.o"
+"pwmtest\stm32f1xx_hal_flash.o"
+"pwmtest\stm32f1xx_hal_flash_ex.o"
+"pwmtest\stm32f1xx_hal_exti.o"
+"pwmtest\system_stm32f1xx.o"
+--strict --scatter "PWMtest\PWMtest.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "PWMtest.map" -o PWMtest\PWMtest.axf
