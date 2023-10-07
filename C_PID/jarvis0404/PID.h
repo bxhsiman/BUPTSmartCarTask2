@@ -7,7 +7,7 @@ typedef struct
     float actual;                  // 实际值
     float err;                     // 误差
     float last_err, last_last_err; // 上一次误差和上上次误差
-    float integral;                // 积分
+    float sum;                     // 积分值
     float kp, ki, kd;              // PID参数
     float PIDOutput;               // PID输出
 } PID;

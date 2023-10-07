@@ -7,11 +7,11 @@ void PID_Init(PID *PIDStruct)
     PIDStruct->err = 0.0;
     PIDStruct->last_err = 0.0;
     PIDStruct->last_last_err = 0.0;
-    PIDStruct->kp = 0.0;
-    PIDStruct->ki = 0.0;
-    PIDStruct->kd = 0.0;
+    PIDStruct->kp = 0.2;
+    PIDStruct->ki = 0.015;
+    PIDStruct->kd = 0.2;
     PIDStruct->PIDOutput = 0.0;
-    PIDStruct->integral = 0.0;
+    PIDStruct->sum = 0.0;
 }
 
 void PID_SetParameter(PID *PIDStruct, float kp, float ki, float kd)
@@ -25,8 +25,8 @@ float PID_PostionalPID(PID *PIDStruct, float speed) // 位置式PID实现
 {
     PIDStruct->set = speed;
     PIDStruct->err = PIDStruct->set - PIDStruct->actual;
-    PIDStruct->integral += PIDStruct->err;
-    PIDStruct->PIDOutput = (PIDStruct->kp * PIDStruct->err) + (PIDStruct->ki * PIDStruct->integral) + (PIDStruct->kd * (PIDStruct->err - PIDStruct->last_err));
+    PIDStruct->sum += PIDStruct->err;
+    PIDStruct->PIDOutput = (PIDStruct->kp * PIDStruct->err) + (PIDStruct->ki * PIDStruct->sum) + (PIDStruct->kd * (PIDStruct->err - PIDStruct->last_err));
     PIDStruct->last_err = PIDStruct->err;
     PIDStruct->actual = PIDStruct->PIDOutput * 1.0;
 
@@ -36,13 +36,13 @@ float PID_PostionalPID(PID *PIDStruct, float speed) // 位置式PID实现
 float PID_IncrementalPID(PID *PIDStruct, float set)
 {
     PIDStruct->set = set;
-    PIDStruct->err = PIDStruct->set - PIDStruct->actual;
+    PIDStruct->err = PIDStruct->set - PIDStruct->actual; // 当前误差
     float increment = PIDStruct->kp * (PIDStruct->err - PIDStruct->last_err) + PIDStruct->ki * PIDStruct->err + PIDStruct->kd * (PIDStruct->err - 2 * PIDStruct->last_err + PIDStruct->last_last_err);
-    PIDStruct->last_last_err = PIDStruct->last_err;
-    PIDStruct->last_err = PIDStruct->err;
-    PIDStruct->actual += increment;
+    PIDStruct->last_last_err = PIDStruct->last_err; // 更新上上次误差
+    PIDStruct->last_err = PIDStruct->err;           // 更新上次误差
+    PIDStruct->actual += increment;                 // 更新实际值
 
-    PIDStruct->PIDOutput = PIDStruct->actual * 1.0;
+    PIDStruct->PIDOutput = PIDStruct->actual * 1.0; // PID Controller输出
 
     return PIDStruct->actual;
 }
@@ -52,11 +52,13 @@ int main(void)
     printf("PID Begin\n");
     PID pid;
     PID_Init(&pid);
-    PID_SetParameter(&pid, 0.2, 0.015, 0.2);
+
     uint16_t cnt = 1000;
 
+    printf("普通位置式PID | 增量式PID\n");
     while (cnt--)
     {
+        printf("PID: %f | ", PID_PostionalPID(&pid, 100.0));
         printf("PID: %f\n", PID_IncrementalPID(&pid, 100.0));
     }
 
