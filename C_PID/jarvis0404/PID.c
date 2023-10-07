@@ -25,9 +25,9 @@ float PID_PostionalPID(PID *PIDStruct, float target) // 位置式PID实现
 {
     PIDStruct->target = target;
     PIDStruct->err = PIDStruct->target - PIDStruct->actual;
-    PIDStruct->sum += PIDStruct->err;
+    PIDStruct->sum += PIDStruct->err; // 实现积分
     PIDStruct->PIDOutput = (PIDStruct->kp * PIDStruct->err) + (PIDStruct->ki * PIDStruct->sum) + (PIDStruct->kd * (PIDStruct->err - PIDStruct->last_err));
-    PIDStruct->last_err = PIDStruct->err;
+    PIDStruct->last_err = PIDStruct->err; // 更新上次误差
     PIDStruct->actual = PIDStruct->PIDOutput * 1.0;
 
     return PIDStruct->actual;
@@ -47,6 +47,7 @@ float PID_IncrementalPID(PID *PIDStruct, float target)
     return PIDStruct->actual;
 }
 
+// Test
 int main(void)
 {
     printf("PID Begin\n");
@@ -58,8 +59,8 @@ int main(void)
     printf("普通位置式PID | 增量式PID\n");
     while (cnt--)
     {
-        printf("PID: %f | ", PID_PostionalPID(&pid, 100.0));
-        printf("PID: %f\n", PID_IncrementalPID(&pid, 100.0));
+        printf("Pos: %f | ", PID_PostionalPID(&pid, 100.0));
+        printf("Inc: %f\n", PID_IncrementalPID(&pid, 100.0));
     }
 
     return 0;
