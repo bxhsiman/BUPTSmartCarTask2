@@ -1,16 +1,4 @@
-#include <stdio.h>
-#include <stdint.h>
-
-typedef struct
-{
-    float set;
-    float actual;
-    float err;
-    float last_err, last_last_err;
-    float integral;
-    float kp, ki, kd;
-    float PIDOutput;
-} PID;
+#include "PID.h"
 
 void PID_Init(PID *PIDStruct)
 {
@@ -24,24 +12,6 @@ void PID_Init(PID *PIDStruct)
     PIDStruct->kd = 0.0;
     PIDStruct->PIDOutput = 0.0;
     PIDStruct->integral = 0.0;
-}
-
-void PID_SetParameter(PID *PIDStruct, float kp, float ki, float kd); // 设置PID参数
-float PID_PostionalPID(PID *PIDStruct, float speed);
-float PID_IncrementalPID(PID *PIDStruct, float speed); // 增量式PID实现
-
-int main(void)
-{
-    printf("PID Begin\n");
-    PID pid;
-    PID_Init(&pid);
-    PID_SetParameter(&pid, 0.2, 0.015, 0.2);
-    uint16_t cnt = 1000;
-    while (cnt--)
-    {
-        printf("PID: %f\n", PID_IncrementalPID(&pid, 100.0));
-    }
-    return 0;
 }
 
 void PID_SetParameter(PID *PIDStruct, float kp, float ki, float kd)
@@ -75,4 +45,20 @@ float PID_IncrementalPID(PID *PIDStruct, float set)
     PIDStruct->PIDOutput = PIDStruct->actual * 1.0;
 
     return PIDStruct->actual;
+}
+
+int main(void)
+{
+    printf("PID Begin\n");
+    PID pid;
+    PID_Init(&pid);
+    PID_SetParameter(&pid, 0.2, 0.015, 0.2);
+    uint16_t cnt = 1000;
+
+    while (cnt--)
+    {
+        printf("PID: %f\n", PID_IncrementalPID(&pid, 100.0));
+    }
+
+    return 0;
 }
