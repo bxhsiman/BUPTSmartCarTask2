@@ -3,7 +3,7 @@
 
 typedef struct
 {
-    float set;                     // 设定值
+    float target;                  // 设定值
     float actual;                  // 实际值
     float err;                     // 误差
     float last_err, last_last_err; // 上一次误差和上上次误差

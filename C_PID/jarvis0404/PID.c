@@ -3,7 +3,7 @@
 void PID_Init(PID *PIDStruct)
 {
     PIDStruct->actual = 0.0;
-    PIDStruct->set = 0.0;
+    PIDStruct->target = 0.0;
     PIDStruct->err = 0.0;
     PIDStruct->last_err = 0.0;
     PIDStruct->last_last_err = 0.0;
@@ -21,10 +21,10 @@ void PID_SetParameter(PID *PIDStruct, float kp, float ki, float kd)
     PIDStruct->kd = kd;
 }
 
-float PID_PostionalPID(PID *PIDStruct, float speed) // 位置式PID实现
+float PID_PostionalPID(PID *PIDStruct, float target) // 位置式PID实现
 {
-    PIDStruct->set = speed;
-    PIDStruct->err = PIDStruct->set - PIDStruct->actual;
+    PIDStruct->target = target;
+    PIDStruct->err = PIDStruct->target - PIDStruct->actual;
     PIDStruct->sum += PIDStruct->err;
     PIDStruct->PIDOutput = (PIDStruct->kp * PIDStruct->err) + (PIDStruct->ki * PIDStruct->sum) + (PIDStruct->kd * (PIDStruct->err - PIDStruct->last_err));
     PIDStruct->last_err = PIDStruct->err;
@@ -33,10 +33,10 @@ float PID_PostionalPID(PID *PIDStruct, float speed) // 位置式PID实现
     return PIDStruct->actual;
 }
 
-float PID_IncrementalPID(PID *PIDStruct, float set)
+float PID_IncrementalPID(PID *PIDStruct, float target)
 {
-    PIDStruct->set = set;
-    PIDStruct->err = PIDStruct->set - PIDStruct->actual; // 当前误差
+    PIDStruct->target = target;
+    PIDStruct->err = PIDStruct->target - PIDStruct->actual; // 当前误差
     float increment = PIDStruct->kp * (PIDStruct->err - PIDStruct->last_err) + PIDStruct->ki * PIDStruct->err + PIDStruct->kd * (PIDStruct->err - 2 * PIDStruct->last_err + PIDStruct->last_last_err);
     PIDStruct->last_last_err = PIDStruct->last_err; // 更新上上次误差
     PIDStruct->last_err = PIDStruct->err;           // 更新上次误差
