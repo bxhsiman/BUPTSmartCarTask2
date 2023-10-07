@@ -6,47 +6,58 @@ typedef struct
     float set;
     float actual;
     float err;
-    float err_last;
+    float last_err;
     float kp, ki, kd;
     float voltage;
     float integral;
 } PID;
 
-void PID_Init(PID *pidStruct)
+void PID_Init(PID *PIDStruct)
 {
-    pidStruct->actual = 0.0;
-    pidStruct->set = 0.0;
-    pidStruct->err = 0.0;
-    pidStruct->err_last = 0.0;
-    pidStruct->kp = 0.0;
-    pidStruct->ki = 0.0;
-    pidStruct->kd = 0.0;
-    pidStruct->voltage = 0.0;
-    pidStruct->integral = 0.0;
+    PIDStruct->actual = 0.0;
+    PIDStruct->set = 0.0;
+    PIDStruct->err = 0.0;
+    PIDStruct->last_err = 0.0;
+    PIDStruct->kp = 0.0;
+    PIDStruct->ki = 0.0;
+    PIDStruct->kd = 0.0;
+    PIDStruct->voltage = 0.0;
+    PIDStruct->integral = 0.0;
 }
 
-int PID_SetParameter(PID *pidStruct); // 设置PID参数
-float PID_PostionalPID(PID *pidStruct, float speed);
-int PID_IncrementalPID(PID *pidStruct); // 增量式PID实现
+void PID_SetParameter(PID *PIDStruct, float kp, float ki, float kd); // 设置PID参数
+float PID_PostionalPID(PID *PIDStruct, float speed);
+int PID_IncrementalPID(PID *PIDStruct); // 增量式PID实现
 
 int main(void)
 {
-
+    printf("PID Begin\n");
+    PID pid;
+    PID_Init(&pid);
+    PID_SetParameter(&pid, 0.2, 0.015, 0.2);
+    uint16_t cnt = 1000;
+    while (cnt--)
+    {
+        printf("PID: %f\n", PID_PostionalPID(&pid, 100.0));
+    }
     return 0;
 }
 
-float PID_PostionalPID(PID *pidStruct, float speed) // 位置式PID实现
+float PID_PostionalPID(PID *PIDStruct, float speed) // 位置式PID实现
 {
-    pidStruct->set = speed;
-    pidStruct->err = pidStruct->set - pidStruct->actual;
-    pidStruct->integral += pidStruct->err;
-    pidStruct->voltage = (pidStruct->kp * pidStruct->err) + (pidStruct->ki * pidStruct->integral) + (pidStruct->kd * (pidStruct->err - pidStruct->err_last));
-    pidStruct->err_last = pidStruct->err;
-    pidStruct->actual = pidStruct->voltage * 1.0;
+    PIDStruct->set = speed;
+    PIDStruct->err = PIDStruct->set - PIDStruct->actual;
+    PIDStruct->integral += PIDStruct->err;
+    PIDStruct->voltage = (PIDStruct->kp * PIDStruct->err) + (PIDStruct->ki * PIDStruct->integral) + (PIDStruct->kd * (PIDStruct->err - PIDStruct->last_err));
+    PIDStruct->last_err = PIDStruct->err;
+    PIDStruct->actual = PIDStruct->voltage * 1.0;
 
-    return pidStruct->actual;
+    return PIDStruct->actual;
 }
 
-int PID_IncrementalPID(PID *pidStruct)
+void PID_SetParameter(PID *PIDStruct, float kp, float ki, float kd)
 {
+    PIDStruct->kp = kp;
+    PIDStruct->ki = ki;
+    PIDStruct->kd = kd;
 }
