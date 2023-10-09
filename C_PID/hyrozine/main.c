@@ -9,6 +9,7 @@ int main()
     int pos2 = 0;
     //变量设置
     fl kp, ki, kd, target = 0;
+    PID pid1,pid2;
     //初始化
     PID_Init(&pid1);
     PID_Init(&pid2);

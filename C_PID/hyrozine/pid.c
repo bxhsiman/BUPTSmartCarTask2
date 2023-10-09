@@ -6,7 +6,7 @@
 //输出限幅
 #define omax 1000
 #define omin -1000
-void PID_Init(struct PID* pid)
+void PID_Init(PID* pid)
 {
     pid->kp = 0;
     pid->ki = 0;
@@ -18,7 +18,7 @@ void PID_Init(struct PID* pid)
     pid->target = 0;
     pid->pwm = 0;
 }
-int PID_SetParameter(struct PID* pid, fl kp, fl ki, fl kd,fl target)
+int PID_SetParameter(PID* pid, fl kp, fl ki, fl kd,fl target)
 {
     if (kp < 0 || ki < 0 || kd < 0)
     {
@@ -30,7 +30,7 @@ int PID_SetParameter(struct PID* pid, fl kp, fl ki, fl kd,fl target)
     pid->target = target;
     return 1;
 }
-float PID_PostionalPID(struct PID* pid, fl pos)
+float PID_PostionalPID(PID* pid, fl pos)
 {
     pid->err = pid->target - pos;
     pid->integral += pid->err;
@@ -52,7 +52,7 @@ float PID_PostionalPID(struct PID* pid, fl pos)
             pid->pwm = omin;
     return pid->pwm;
 }
-float PID_IncrementalPID(struct PID* pid, fl pos)
+float PID_IncrementalPID(PID* pid, fl pos)
 {
     pid->err = pid->target - pos;
     fl tmp = pid->kp * (pid->err - pid->last_err) + pid->ki * pid->err + pid->kd * (pid->err - 2 * pid->last_err + pid->front_err);
