@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\Users\Yang\Desktop\学习\STM32项目\作业\作业05：PID算法作业\PID算法部分作业\main.cpp(11,29): warning C4305: “参数”: 从“double”到“float”截断
+C:\Users\Yang\Desktop\学习\STM32项目\作业\作业05：PID算法作业\PID算法部分作业\main.cpp(11,19): warning C4305: “参数”: 从“double”到“float”截断
+  PID算法部分作业.vcxproj -> C:\Users\Yang\Desktop\学习\STM32项目\作业\作业05：PID算法作业\PID算法部分作业\x64\Debug\PID算法部分作业.exe
