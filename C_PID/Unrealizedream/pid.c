@@ -1,10 +1,9 @@
 #include"pid.h"
 #include<stdio.h>
 
-
-int PID_Init(PID *pid)
+float PID_Init(PID *pid)
 {
-    pid->target = 100;
+    pid->target = 50;
     pid->input =0;
     pid->output = 0;
     pid->err = 0;
@@ -21,23 +20,20 @@ int Limit_i(PID *pid)
         pid->integral = 200 ;
     return 0;//对i进行限制
 }
-int PID_SetParameter(float kp, float ki, float kd, float kf ,PID *pid)
+float PID_SetParameter(float kp, float ki, float kd, float kf ,PID *pid)
 {
     printf("请输入参数,例如1.0\n");
     printf("kp= ");
-    scanf("%1f",&kp) ;
-    getchar();
+    scanf("%f",&kp) ;
     getchar();
     printf("ki= ") ;
-    scanf("%1f",&ki) ;
-    getchar();
+    scanf("%f",&ki) ;
     getchar();
     printf("kd= ");
-    scanf("%1f",&kd) ;
-    getchar();
+    scanf("%f",&kd) ;
     getchar();
     printf("kf= ");
-    scanf("%1f",&kf);
+    scanf("%f",&kf);
     pid->kp = kp ;
     pid->ki = ki ;
     pid->kd = kd ;
@@ -69,43 +65,3 @@ float PID_feedforwardPID(PID *pid)
     pid->last_err= pid->err ;
 };    //前馈增量式pid实现
 
-int main()
-{
-    PID pid ;
-    float kp = 0;
-    float ki = 0;
-    float kd = 0;
-    float kf = 0;
-    PID_Init(&pid);
-    PID_SetParameter(kp, ki, kd, kf,&pid);
-    int times = 0 ;
-    printf("普通位置式pid误差表:\n");
-    for(times = 0 ; times<10 ; times++)
-    {
-        PID_PostionalPID(&pid);
-        Limit_i(&pid);
-        printf("E=%2f\n",pid.err);
-    };
-    
-    times = 0 ;
-    PID_Init(&pid);
-    printf("普通增量式pid误差表:\n");
-    for(times = 0 ; times<10 ; times++)
-    {
-        PID_IncrementalPID(&pid);
-        Limit_i(&pid);
-        printf("E=%2f\n",pid.err);
-    };
-    
-    times = 0 ;
-    PID_Init(&pid);
-    printf("前馈式pid误差表:\n");
-    for(times = 0 ; times<10 ; times++)
-    {
-        PID_feedforwardPID(&pid);
-        Limit_i(&pid);
-        printf("E=%2f\n",pid.err);
-    };
-    
-    return 0;
-}
