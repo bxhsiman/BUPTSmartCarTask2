@@ -33,6 +33,7 @@ void Timer_Init(void)
 }
 
 
+//按键消抖
 void TIM2_IRQHandler(void)
 {
 	if(TIM_GetITStatus(TIM2,TIM_FLAG_Update) == SET)

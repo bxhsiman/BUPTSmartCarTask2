@@ -7,7 +7,7 @@ int main(void)
 {
 	LED_Init();
 	Key_Init();
-	Timer_Init();                        //use TIM to eliminate key jitter
+	Timer_Init();                        //用TIM完成按键消抖
 	
 	while(1)
 	{

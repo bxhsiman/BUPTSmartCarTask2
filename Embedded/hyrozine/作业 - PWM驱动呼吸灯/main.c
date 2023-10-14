@@ -12,6 +12,7 @@ int main(void)
 	
 	while (1)
 	{
+		//通过改变占空比来改变LED亮度
 		for(i = 0; i <= 100; i++)
 		{
 			PWM_Setcompare1(i);
