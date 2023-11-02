@@ -14,10 +14,10 @@ void AD_Init(void)
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_Init(GPIOA,&GPIO_InitStructure);
+    GPIO_Init(GPIOB,&GPIO_InitStructure);
 
     //配置多路开关
-    ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_55Cycles5);
+    ADC_RegularChannelConfig(ADC1, ADC_Channel_8, 1, ADC_SampleTime_55Cycles5);
 
     //配置ADC转换器
     ADC_InitTypeDef ADC_Initstructure;

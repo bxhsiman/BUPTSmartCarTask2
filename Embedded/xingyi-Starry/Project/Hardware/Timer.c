@@ -2,6 +2,8 @@
 #include "LED.h"
 #include "PWM.h"
 
+//TIM3用于实现LED闪烁，TIM4用于实现PWM调频
+
 uint8_t PWM_flag = 0;
 uint8_t PWM_CCR = 0;
 

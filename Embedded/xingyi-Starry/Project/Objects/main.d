@@ -34,3 +34,4 @@
 .\objects\main.o: .\Hardware\Key.h
 .\objects\main.o: .\Hardware\PWM.h
 .\objects\main.o: .\Hardware\Timer.h
+.\objects\main.o: .\Hardware\ADC.h

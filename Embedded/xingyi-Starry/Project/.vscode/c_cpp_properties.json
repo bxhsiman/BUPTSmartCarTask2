@@ -3,11 +3,11 @@
         {
             "name": "Target 1",
             "includePath": [
-                "c:\\Users\\97329\\Desktop\\works\\BUPTSmartCarTask2\\Embedded\\xingyi-Starry\\4-1 OLED显示屏\\Start",
-                "c:\\Users\\97329\\Desktop\\works\\BUPTSmartCarTask2\\Embedded\\xingyi-Starry\\4-1 OLED显示屏\\Library",
-                "c:\\Users\\97329\\Desktop\\works\\BUPTSmartCarTask2\\Embedded\\xingyi-Starry\\4-1 OLED显示屏\\User",
-                "c:\\Users\\97329\\Desktop\\works\\BUPTSmartCarTask2\\Embedded\\xingyi-Starry\\4-1 OLED显示屏\\System",
-                "c:\\Users\\97329\\Desktop\\works\\BUPTSmartCarTask2\\Embedded\\xingyi-Starry\\4-1 OLED显示屏\\Hardware",
+                "c:\\Users\\97329\\Desktop\\works\\BUPTSmartCarTask2\\Embedded\\xingyi-Starry\\Project\\Start",
+                "c:\\Users\\97329\\Desktop\\works\\BUPTSmartCarTask2\\Embedded\\xingyi-Starry\\Project\\Library",
+                "c:\\Users\\97329\\Desktop\\works\\BUPTSmartCarTask2\\Embedded\\xingyi-Starry\\Project\\User",
+                "c:\\Users\\97329\\Desktop\\works\\BUPTSmartCarTask2\\Embedded\\xingyi-Starry\\Project\\System",
+                "c:\\Users\\97329\\Desktop\\works\\BUPTSmartCarTask2\\Embedded\\xingyi-Starry\\Project\\Hardware",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include\\rw"
             ],
