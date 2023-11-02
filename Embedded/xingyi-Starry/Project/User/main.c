@@ -1,3 +1,6 @@
+/*本工程使用stm32f103c8t6实现*/
+/*视频展示BV1Qu4y1h7mp*/
+
 #include "stm32f10x.h"                  // Device header
 #include "LED.h" //按键点灯和闪烁的硬件实现
 #include "OLED.h" //OLED显示屏
